@@ -36,4 +36,12 @@ class Path {
     endShape(CLOSE);
     popMatrix();
   }
+  
+  PVector getEndpoint(int index) {
+    if (index < 0 || index >= len) {
+      return null;
+    } else {
+      return segments[index].endpoint;
+    }
+  }
 }
