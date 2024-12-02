@@ -47,6 +47,10 @@ void updateGameState() {
 
 void drawGameState() {
   background(#3A5953);
+  pushMatrix();
+  translate(400, 0);
+  
+  popMatrix();
 }
 
 void drawUI() {
