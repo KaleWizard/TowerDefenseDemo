@@ -3,7 +3,10 @@
 boolean isWaveInProgress;
 int nextWave;
 int playerMoney;
-Health health;
+Health playerHealth;
+
+// Global game objects
+Path gamePath;
 
 // UI elements
 Text playerMoneyText;
@@ -13,7 +16,7 @@ Text backToMenuText;
 Button backToMenuButton;
 
 void initializeGame() {
-  health = new Health(10, loadImage("Heart.png"));
+  playerHealth = new Health(10, loadImage("Heart.png"));
   playerMoneyText = new Text("$", 50, 50, 75, color(255));
   startWaveText = new Text("START WAVE", 1282, 784, 32, color(255));
   startWaveButton = new Button(1250, 750, 300, 100, 20);
@@ -26,11 +29,11 @@ void newGame() {
   nextWave = 1;
   playerMoney = 15;
   playerMoneyText.setString("$" + str(playerMoney));
-  health.reset();
+  playerHealth.reset();
 }
 
 void gameMain() {
-  if (health.isPlayerDead()) {
+  if (playerHealth.isPlayerDead()) {
     drawGameState();
     drawUI();
     drawGameOver();
@@ -58,7 +61,7 @@ void drawUI() {
   fill(0);
   rect(0, 0, 400, height);
   playerMoneyText.render();
-  health.render();
+  playerHealth.render();
   if (!isWaveInProgress) {
     startWaveButton.render();
     startWaveText.render();
