@@ -4,8 +4,11 @@
 Text words = new Text("$9876543210", 100, 100, 100, color(0));
 
 int counter = 0;
+
+void initializeTesting() {
+  newGame();
+}
+
 void testingDraw() {
-  background(255);
-  words.setString("$" + str(counter += 17));
-  words.render();
+  gameMain();
 }

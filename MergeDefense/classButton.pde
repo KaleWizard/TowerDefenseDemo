@@ -10,7 +10,7 @@ class Button {
   boolean mouseIsPressed;
   float pixelSize; // Determines border size
 
-  Button(float tempX, float tempY, float tempH, float tempW, float tempPixelSize) {
+  Button(float tempX, float tempY, float tempW, float tempH, float tempPixelSize) {
     x = tempX;
     y = tempY;
     h = tempH;
