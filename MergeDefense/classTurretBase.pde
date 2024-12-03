@@ -11,6 +11,7 @@ class TurretBase {
     red = type == 1? 255: 0;
     green = type == 2? 255: 0;
     blue = type == 3? 255: 0;
+    if (red + green + blue == 0) noLoop();
     sides = 2 + type;
   }
   

@@ -3,7 +3,20 @@ ArrayList<Ray> rays;
 
 void initializeRays() {
   rays = new ArrayList<Ray>();
+  cardinalDirections = new PVector[4];
+  cardinalDirections[0] = new PVector(1, 0);
+  cardinalDirections[1] = new PVector(-1, 0);
+  cardinalDirections[2] = new PVector(0, 1);
+  cardinalDirections[3] = new PVector(0, -1);
 }
+
+PVector[] cardinalDirections;
+void fourRays(PVector position, float rayWidth, int damage) {
+  for (int i = 0; i < 4; i++) {
+    rays.add(new Ray(position, cardinalDirections[i], rayWidth, damage));
+  }
+}
+
 
 class Ray extends Decayable {
   PVector[] vertices;
