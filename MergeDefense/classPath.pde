@@ -13,9 +13,11 @@ class Path {
   void render() {
     noStroke();
     fill(#1D2B53);
+    rectMode(CORNERS);
     for (int i = 0; i < len; i++) {
       segments[i].render(i % 2 == 0);
     }
+    rectMode(CORNER);
     for (int i = 0; i < 4; i++) {
       renderIndicator(pathStartX, 25 - 37.5 * i, pow(0.5, i));
     }

@@ -11,7 +11,7 @@ class Enemy {
     targetIndex = 0;
     target = p.getEndpoint(0);
     position = new PVector(p.pathStartX, -50);
-    velocity = target.copy().sub(position).normalize().mult(4);
+    setVelocity();
     health = maxHealth = tempMaxHealth;
   }
   
@@ -37,8 +37,13 @@ class Enemy {
         playerHealth.takeDamage(1);
         return true;
       }
+      setVelocity();
     }
     return false;
+  }
+  
+  void setVelocity() {
+    velocity = target.copy().sub(position).normalize().mult(4);
   }
   
   boolean takeDamage(int damage) {

@@ -5,15 +5,11 @@ class PathSegment {
   int len;
   PVector endpoint;
   
-  PathSegment(int xPos, int yPos, int tLen, boolean isVertical) {
+  PathSegment(int xPos, int yPos, int tLen, PVector end) {
     x = xPos;
     y = yPos;
     len = tLen;
-    if (isVertical) {
-      endpoint = new PVector(100 * x + 50, 100 * (y + len) + 50);
-    } else {
-      endpoint = new PVector(100 * (x + len) + 50, 100 * y + 50);
-    }
+    endpoint = end;
   }
   
   void render(boolean isPathVertical) {

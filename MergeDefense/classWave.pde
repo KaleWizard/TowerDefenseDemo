@@ -6,11 +6,20 @@ class Wave {
   int enemyHealth;
   
   Wave(int round) {
+    framesSinceStart = 0;
     enemyHealth = 3 + (round / 3) * 2;
     waveLength = 180 + 30 * (round / 2);
     spawns = new int[waveLength];
     addDripFeed(round);
     addClusters(round);
+  }
+  
+  void spawnEnemy(ArrayList<Enemy> enemies, Path p) {
+    if (isDone()) return;
+    if (spawns[framesSinceStart] > 0) {
+      enemies.add(new Enemy(spawns[framesSinceStart], p));
+    }
+    framesSinceStart++;
   }
   
   void addDripFeed(int round) {
@@ -31,5 +40,9 @@ class Wave {
         spawns[int(i + j)] += halfHealth;
       }
     }
+  }
+  
+  boolean isDone() {
+    return waveLength == framesSinceStart;
   }
 }

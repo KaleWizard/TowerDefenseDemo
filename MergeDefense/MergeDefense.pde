@@ -1,7 +1,7 @@
 // The main file of MergeDefense
 
 // If this is true, expect the game not to function properly
-boolean isTesting = true;
+boolean isTesting = false;
 
 // Global variables
 boolean isPlaying = false;
@@ -9,6 +9,7 @@ boolean isPlaying = false;
 void setup() {
   size(1600, 900);
   frameRate(30);
+  initializePaths(); // See pathSelection.pde
   initializeMenu(); // See mainMenu.pde
   initializeGame(); // See gameLogic.pde
   initializeTesting(); // See testingFile.pde

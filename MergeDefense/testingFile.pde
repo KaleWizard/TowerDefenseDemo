@@ -9,13 +9,8 @@ Enemy name;
 
 void initializeTesting() {
   newGame();
-  name = new Enemy(100);
 }
 
 void testingDraw() {
   gameMain();
-  name.render();
-  if (frameCount % 30 == 0) {
-    name.health -= 5;
-  }
 }
