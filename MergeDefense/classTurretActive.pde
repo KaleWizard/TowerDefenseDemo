@@ -55,6 +55,27 @@ class TurretActive extends TurretBase {
     }
     if (target == null) return;
     
+    if (longRange) {
+      if (ray) {
+        if (explosion) {
+          rayBlastBullet();
+        } else {
+          targetedRay(target);
+        }
+      } else {
+        if (explosion) {
+          explodingBullet();
+        } else {
+          bullet();
+        }
+      }
+    } else {
+      if (ray) {
+        fourRays(position, rayWidth, damage);
+      } else {
+        explosion();
+      }
+    }
   }
   
   boolean inRange(Enemy e) {
@@ -79,5 +100,24 @@ class TurretActive extends TurretBase {
   
   void explosion() {
     
+  }
+  
+  void merge(TurretActive merging) {
+    damage = mergeValues(damage, merging.damage);
+    range = mergeValues(range, merging.range);
+    rayWidth = mergeValues(rayWidth, merging.rayWidth);
+    explosionRadius = mergeValues(explosionRadius, merging.explosionRadius);
+    if (attackDelay == merging.attackDelay) {
+      attackDelay = int(attackDelay * 0.9);
+    } else {
+    attackDelay = min(attackDelay, merging.attackDelay);
+    }
+    longRange = longRange || merging.longRange;
+    ray = ray || merging.ray;
+    explosion = explosion || merging.explosion;
+  }
+  
+  int mergeValues(int a, int b) {
+    return max(a, b) + min(a, b) / 2;
   }
 }
