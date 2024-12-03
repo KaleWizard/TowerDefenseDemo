@@ -1,4 +1,7 @@
 
+int ENEMYRADIUS = 45;
+int ENEMYDIAMETER = 2 * ENEMYRADIUS;
+
 class Enemy {
   PVector position;
   PVector velocity;

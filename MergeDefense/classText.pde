@@ -26,7 +26,8 @@ class Text {
   float charX; // Tracker for where to place the next character (some are larger than others)
 
   void render() {
-    noStroke();
+    strokeWeight(1);
+    stroke(c);
     fill(c);
     charX = x; // Reset charX
     for (int i = 0; i < stringLength; i++) {
