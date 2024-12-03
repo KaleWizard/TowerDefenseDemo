@@ -1,4 +1,10 @@
 
+ArrayList<TurretActive> turrets;
+
+void initializeTurrets() {
+  turrets = new ArrayList<TurretActive>();
+}
+
 class TurretActive extends TurretBase {
   boolean longRange;
   boolean ray;
@@ -54,55 +60,45 @@ class TurretActive extends TurretBase {
       }
     }
     if (target == null) return;
-    
     if (longRange) {
-      if (ray) {
-        if (explosion) {
-          rayBlastBullet();
-        } else {
-          targetedRay(target);
-        }
+      if (ray && !explosion) {
+        targetedRay(target); // longRange+ray
       } else {
-        if (explosion) {
-          explodingBullet();
-        } else {
-          bullet();
-        }
+        bullet(); // longRange, longRange+explosion, longRange+ray+explosion
       }
     } else {
       if (ray) {
-        fourRays(position, rayWidth, damage);
+        fourRays(position, rayWidth, damage); // ray, ray+explosion
       } else {
-        explosion();
+        explosion(); // explosion
       }
     }
+    framesUntilAttack = attackDelay;
   }
   
   boolean inRange(Enemy e) {
     return dist(e.position.x, e.position.y, position.x, position.y) <= range;
   }
   
-  void rayBlastBullet() {
-    
-  }
-  
+  //Bullet(PVector originPosition, int dmg, int round, int explosionR, int rayW)
   void targetedRay(Enemy e) {
-    
-  }
-  
-  void explodingBullet() {
-    
+    PVector direction = e.position.copy().sub(position);
+    rays.add(new Ray(position, direction, rayWidth, damage));
   }
   
   void bullet() {
-    
+    bullets.add(new Bullet(position, damage, roundNumber, explosionRadius, rayWidth));
   }
   
   void explosion() {
-    
+    explosions.add(new Explosion(position, damage, explosionRadius));
   }
   
   void merge(TurretActive merging) {
+    sides += merging.sides;
+    red = max(red, merging.red);
+    green = max(green, merging.green);
+    blue = max(blue, merging.blue);
     damage = mergeValues(damage, merging.damage);
     range = mergeValues(range, merging.range);
     rayWidth = mergeValues(rayWidth, merging.rayWidth);

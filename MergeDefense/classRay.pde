@@ -1,5 +1,6 @@
 
 ArrayList<Ray> rays;
+PVector[] cardinalDirections;
 
 void initializeRays() {
   rays = new ArrayList<Ray>();
@@ -10,7 +11,6 @@ void initializeRays() {
   cardinalDirections[3] = new PVector(0, -1);
 }
 
-PVector[] cardinalDirections;
 void fourRays(PVector position, float rayWidth, int damage) {
   for (int i = 0; i < 4; i++) {
     rays.add(new Ray(position, cardinalDirections[i], rayWidth, damage));
@@ -27,11 +27,11 @@ class Ray extends Decayable {
     PVector widthVector = new PVector(-1 * direction.y, direction.x);
     vertices = new PVector[5];
     vertices[0] = position.copy();
-    vertices[1] = position.copy().add(widthVector);
-    vertices[5] = position.copy().sub(widthVector);
+    vertices[1] = position.copy().add(direction).add(widthVector);
+    vertices[4] = position.copy().add(direction).sub(widthVector);
     direction.setMag(2000);
-    vertices[2] = position.copy().add(widthVector);
-    vertices[3] = position.copy().sub(widthVector);
+    vertices[2] = position.copy().add(direction).add(widthVector);
+    vertices[3] = position.copy().add(direction).sub(widthVector);
   }
 
   void doCollision(ArrayList<Enemy> enemies) {

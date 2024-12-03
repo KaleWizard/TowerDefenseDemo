@@ -2,13 +2,13 @@
 // Game logic variables
 boolean isWaveInProgress;
 Wave currentWave;
-int nextWave;
 int playerMoney;
 Health playerHealth;
 
 // Global game objects
 Path gamePath;
 ArrayList<Enemy> enemies;
+int roundNumber;
 
 // UI elements
 Text playerMoneyText;
@@ -29,12 +29,16 @@ void initializeGame() {
 void newGame() {
   gamePath = getPath(); // See pathSelection.pde
   enemies = new ArrayList<Enemy>();
-  currentWave = new Wave(1);
+  roundNumber = 1;
+  currentWave = new Wave(roundNumber);
   isWaveInProgress = false;
-  nextWave = 1;
   playerMoney = 15;
   playerMoneyText.setString("$" + str(playerMoney));
   playerHealth.reset();
+  initializeExplosions(); // See classExplosion.pde
+  initializeRays(); // See classRays.pde
+  initializeBullets(); // See classBullets.pde
+  initializeTurrets(); // See classTurretActive.pde
 }
 
 void gameMain() {
@@ -65,6 +69,32 @@ void updateGameState() {
   if (currentWave.isDone() && enemies.isEmpty()) {
     isWaveInProgress = false;
   }
+  for (TurretActive t : turrets) {
+    t.attack(enemies);
+  }
+  if (!enemies.isEmpty()) {
+    PVector target = enemies.get(0).position;
+    for (Bullet b : bullets) {
+      b.update(target);
+    }
+  }
+  i = 0;
+  while (i < bullets.size()) {
+    Bullet b = bullets.get(i);
+    if (b.doCollision(enemies)) {
+      bullets.remove(i);
+    } else {
+      i++;
+    }
+  }
+  i = 0;
+  while (i < rays.size()) {
+    rays.get(i++).doCollision(enemies);
+  }
+  i = 0;
+  while (i < explosions.size()) {
+    explosions.get(i++).doCollision(enemies);
+  }
 }
 
 void drawGameState() {
@@ -72,8 +102,32 @@ void drawGameState() {
   pushMatrix();
   translate(400, 0);
   gamePath.render();
-  for (Enemy e: enemies) {
+  int i = 0;
+  while (i < explosions.size()) {
+    Explosion e = explosions.get(i);
+    if (e.render()) {
+      explosions.remove(i);
+    } else {
+      i++;
+    }
+  }
+  i = 0;
+  while (i < rays.size()) {
+    Ray r = rays.get(i);
+    if (r.render()) {
+      rays.remove(i);
+    } else {
+      i++;
+    }
+  }
+  for (Enemy e : enemies) {
     e.render();
+  }
+  for (Bullet b : bullets) {
+    b.render();
+  }
+  for (TurretActive t : turrets) {
+    t.render();
   }
   popMatrix();
 }
@@ -89,7 +143,8 @@ void drawUI() {
     startWaveText.render();
     if (startWaveButton.isRollover() && isMousePressed) {
       enemies = new ArrayList<Enemy>();
-      currentWave = new Wave(nextWave);
+      roundNumber++;
+      currentWave = new Wave(roundNumber);
       isWaveInProgress = true;
     }
   }

@@ -19,7 +19,7 @@ class Path {
     }
     rectMode(CORNER);
     for (int i = 0; i < 4; i++) {
-      renderIndicator(pathStartX, 25 - 37.5 * i, pow(0.5, i));
+      renderIndicator(pathStartX, 25 + 37.5 * i, 255 * pow(0.5, i));
     }
   }
   
@@ -27,14 +27,14 @@ class Path {
     pushMatrix();
     translate(x, y);
     noStroke();
-    fill(#FFEC27, opacity);
+    fill(255, 236, 39, opacity);
     beginShape();
     vertex(0, 0);
     vertex(-25, -25);
     vertex(-25, -50);
     vertex(0, -25);
     vertex(25, -50);
-    vertex(25, 25);
+    vertex(25, -25);
     endShape(CLOSE);
     popMatrix();
   }

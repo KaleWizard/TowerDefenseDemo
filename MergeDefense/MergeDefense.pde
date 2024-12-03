@@ -1,7 +1,7 @@
 // The main file of MergeDefense
 
 // If this is true, expect the game not to function properly
-boolean isTesting = false;
+boolean isTesting = true;
 
 // Global variables
 boolean isPlaying = false;

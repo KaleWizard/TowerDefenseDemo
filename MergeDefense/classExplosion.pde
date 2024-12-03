@@ -12,7 +12,7 @@ class Explosion extends Decayable {
 
   Explosion(PVector pos, int damage, float r) {
     super(damage);
-    position = pos;
+    position = pos.copy();
     radius = r;
     diameter = 2 * radius;
   }
