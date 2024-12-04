@@ -1,5 +1,5 @@
 // Text class from Assignment 3
-// 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and $ have been added
+// 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, $, +, =, and ? have been added
 
 // This function only displays Strings with all capital character and/or spaces
 // The font style was modeled after Minecraft's font
@@ -73,6 +73,9 @@ class Text {
       } else if (c == '7') { seven();
       } else if (c == '8') { eight();
       } else if (c == '9') { nine();
+      } else if (c == '+') { plus();
+      } else if (c == '=') { equal();
+      } else if (c == '?') { questionMark();
       }
     }
   }
@@ -435,5 +438,26 @@ class Text {
     rect(charX, y + pixelSize * 6, pixelSize, pixelSize);
     rect(charX + pixelSize, y + pixelSize * 7, pixelSize * 3, pixelSize);
     charX += pixelSize * 6;
+  }
+  
+  void plus() {
+    rect(charX, y + pixelSize * 4, pixelSize * 3, pixelSize);
+    rect(charX + pixelSize, y + pixelSize * 3, pixelSize, pixelSize * 3);
+    charX += pixelSize * 4;
+  }
+  
+  void equal() {
+    rect(charX, y + pixelSize * 3, pixelSize * 3, pixelSize);
+    rect(charX, y + pixelSize * 5, pixelSize * 3, pixelSize);
+    charX += pixelSize * 4;
+  }
+  
+  void questionMark() {
+    rect(charX + pixelSize, y, pixelSize * 3, pixelSize);
+    rect(charX, y + pixelSize, pixelSize, pixelSize);
+    rect(charX + pixelSize * 4, y + pixelSize, pixelSize, pixelSize * 2);
+    rect(charX + pixelSize * 3, y + pixelSize * 3, pixelSize, pixelSize);
+    rect(charX + pixelSize * 2, y + pixelSize * 4, pixelSize, pixelSize * 2);
+    rect(charX + pixelSize * 2, y + pixelSize * 7, pixelSize, pixelSize);
   }
 }

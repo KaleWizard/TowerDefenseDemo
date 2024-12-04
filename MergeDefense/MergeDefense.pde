@@ -5,6 +5,7 @@ boolean isTesting = false;
 
 // Global variables
 boolean isPlaying = false;
+boolean isViewingTutorial = false;
 
 void setup() {
   size(1600, 900);
@@ -12,6 +13,7 @@ void setup() {
   initializePaths(); // See pathSelection.pde
   initializeMenu(); // See mainMenu.pde
   initializeGame(); // See gameLogic.pde
+  initializeTutorial(); // See tutorialScreen.pde
   initializeTesting(); // See testingFile.pde
 }
 
@@ -20,6 +22,8 @@ void draw() {
     testingDraw(); // See testingFile.pde
   } else if (isPlaying) {
     gameMain(); // See gameLogic.pde
+  } else if (isViewingTutorial) {
+    tutorialScreen(); // See tutorialScreen.pde
   } else {
     mainMenu(); // See mainMenu.pde
   }

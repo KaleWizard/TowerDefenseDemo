@@ -16,7 +16,6 @@ void mainMenu() {
   playButton.render();
   play.render();
   if (playButton.isRollover() && isMousePressed) {
-    newGame(); // See gameLogic.pde
-    isPlaying = true;
+    isViewingTutorial = true;
   }
 }
