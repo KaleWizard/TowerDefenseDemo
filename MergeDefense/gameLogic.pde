@@ -16,6 +16,7 @@ Text startWaveText;
 Button startWaveButton;
 Text backToMenuText;
 Button backToMenuButton;
+TurretHeld heldTurret;
 
 void initializeGame() {
   playerHealth = new Health(10, loadImage("Heart.png"));
@@ -171,6 +172,7 @@ void drawUI() {
       isWaveInProgress = true;
     }
   }
+  heldTurret.render();
 }
 
 void drawGameOver() {
