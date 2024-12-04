@@ -23,7 +23,7 @@ class Explosion extends Decayable {
     while (i < enemies.size()) {
       Enemy e = enemies.get(i);
       if (collides(e) && e.takeDamage(damage)) {
-        enemies.remove(i);
+        killEnemy(i);
       } else {
         i++;
       }

@@ -45,10 +45,15 @@ class TurretActive extends TurretBase {
     }
     framesUntilAttack = int(random(attackDelay));
     position = new PVector(50 + x * 100, 50 + y * 100);
+    isEnabled = true;
+  }
+  
+  void render() {
+    if (isEnabled) super.render();
   }
   
   void attack(ArrayList<Enemy> enemies) {
-    if (framesUntilAttack > 0) {
+    if (framesUntilAttack > 0 || !isEnabled) {
       framesUntilAttack--;
       return;
     }
@@ -115,5 +120,13 @@ class TurretActive extends TurretBase {
   
   int mergeValues(int a, int b) {
     return max(a, b) + min(a, b) / 2;
+  }
+  
+  void deactivate() {
+    isEnabled = true;
+  }
+  
+  void activate() {
+    isEnabled = true;
   }
 }

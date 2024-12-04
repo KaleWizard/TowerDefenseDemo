@@ -38,24 +38,24 @@ class TurretHeld extends TurretBase {
   }
 
   void getSidebarPoly() {
-    if (50 < mouseX && mouseX < 200) {
-      if (200 < mouseY && mouseY < 350) {
-        originType = 1;
-        playerMoney -= typeOneCost;
-        displacement = new PVector(mouseX - 125, mouseY - 275);
-        show = true;
-      } else if (450 < mouseY && mouseY < 600) {
-        originType = 2;
-        playerMoney -= typeTwoCost;
-        displacement = new PVector(mouseX - 125, mouseY - 525);
-        show = true;
-      } else if (700 < mouseY && mouseY < 850) {
-        originType = 3;
-        playerMoney -= typeThreeCost;
-        displacement = new PVector(mouseX - 125, mouseY - 775);
-        show = true;
-      }
+    if (mouseX < 50 || mouseX > 200) return;
+    if (200 < mouseY && mouseY < 350 && playerMoney >= typeOneCost) {
+      originType = 1;
+      playerMoney -= typeOneCost;
+      displacement = new PVector(125 - mouseX, 275 - mouseY);
+      show = true;
+    } else if (450 < mouseY && mouseY < 600 && playerMoney >= typeTwoCost) {
+      originType = 2;
+      playerMoney -= typeTwoCost;
+      displacement = new PVector(125 - mouseX, 525 - mouseY);
+      show = true;
+    } else if (700 < mouseY && mouseY < 850 && playerMoney >= typeThreeCost) {
+      originType = 3;
+      playerMoney -= typeThreeCost;
+      displacement = new PVector(125 - mouseX, 775 - mouseY);
+      show = true;
     }
+
     if (show) {
       isOriginGrid = false;
       red = originType == 1? 255: 0;
@@ -67,8 +67,58 @@ class TurretHeld extends TurretBase {
   }
 
   void getGridPoly() {
+    int x = (mouseX - 400) / 100;
+    int y = mouseY / 100;
+    TurretActive t = turretGrid[x][y];
+    if (t == null) return;
+    t.deactivate();
+    show = true;
+    isOriginGrid = true;
+    originX = x;
+    originY = y;
+    displacement.set((450 + 100 * x) - mouseX, (50 + 100 * y) - mouseY);
+    red = t.red;
+    green = t.green;
+    blue = t.blue;
+    sides = t.sides;
   }
 
   void dropPoly() {
+    show = false;
+    if (isOriginGrid) {
+      dropGridPoly();
+    } else {
+      dropSidebarPoly();
+    }
+  }
+
+  void dropGridPoly() {
+    int x = (mouseX + int(displacement.x) - 400) / 100;
+    x = constrain(x, 0, gridWidth - 1);
+    int y = (mouseY + int(displacement.y)) / 100;
+    y = constrain(y, 0, gridHeight - 1);
+    if (mouseX < 400 || pathGrid[x][y]) {
+      turretGrid[originX][originY].activate();
+    } else {
+      moveTurret(originX, originY, x, y);
+    }
+  }
+
+  void dropSidebarPoly() {
+    int x = (mouseX + int(displacement.x) - 400) / 100;
+    x = constrain(x, 0, gridWidth - 1);
+    int y = (mouseY + int(displacement.y)) / 100;
+    y = constrain(y, 0, gridHeight - 1);
+    if (mouseX < 400 || pathGrid[x][y]) {
+      if (originType == 1) {
+        playerMoney += typeOneCost;
+      } else if (originType == 2) {
+        playerMoney += typeTwoCost;
+      } else if (originType == 3) {
+        playerMoney += typeThreeCost;
+      }
+    } else {
+      addTurret(new TurretActive(originType, x, y), x, y);
+    }
   }
 }

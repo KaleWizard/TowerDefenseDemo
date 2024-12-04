@@ -45,7 +45,7 @@ class Bullet {
       Enemy e = enemies.get(i);
       if (collides(e)) {
         if (e.takeDamage(hit())) {
-          enemies.remove(i);
+          killEnemy(i);
         }
         return true;
       } else {

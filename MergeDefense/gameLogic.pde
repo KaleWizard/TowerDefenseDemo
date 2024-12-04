@@ -35,14 +35,12 @@ void newGame() {
   currentWave = new Wave(roundNumber);
   isWaveInProgress = false;
   playerMoney = 15;
-  playerMoneyText.setString("$" + str(playerMoney));
   playerHealth.reset();
   heldTurret = new TurretHeld();
   initializeExplosions(); // See classExplosion.pde
   initializeRays(); // See classRays.pde
   initializeBullets(); // See classBullets.pde
   initializeGrid(gamePath); // See gridManager.pde
-  //initializeTurrets(); // See classTurretActive.pde
 }
 
 void gameMain() {
@@ -81,11 +79,12 @@ void updateGameState() {
       }
     }
   }
+  PVector target = null;
   if (!enemies.isEmpty()) {
-    PVector target = enemies.get(0).position;
-    for (Bullet b : bullets) {
-      b.update(target);
-    }
+    target = enemies.get(0).position;
+  }
+  for (Bullet b : bullets) {
+    b.update(target);
   }
   i = 0;
   while (i < bullets.size()) {
@@ -110,8 +109,22 @@ void drawGameState() {
   background(#3A5953);
   pushMatrix();
   translate(400, 0);
+  drawTileIndicator();
   drawGrid();
   gamePath.render();
+  for (Enemy e : enemies) {
+    e.render();
+  }
+  for (Bullet b : bullets) {
+    b.render();
+  }
+  for (int j = 0; j < gridWidth; j++) {
+    for (int k = 0; k < gridHeight; k++) {
+      if (turretGrid[j][k] != null) {
+        turretGrid[j][k].render();
+      }
+    }
+  }
   int i = 0;
   while (i < explosions.size()) {
     Explosion e = explosions.get(i);
@@ -128,19 +141,6 @@ void drawGameState() {
       rays.remove(i);
     } else {
       i++;
-    }
-  }
-  for (Enemy e : enemies) {
-    e.render();
-  }
-  for (Bullet b : bullets) {
-    b.render();
-  }
-  for (int j = 0; j < gridWidth; j++) {
-    for (int k = 0; k < gridHeight; k++) {
-      if (turretGrid[j][k] != null) {
-        turretGrid[j][k].render();
-      }
     }
   }
   popMatrix();
@@ -166,7 +166,7 @@ void drawUI() {
     startWaveButton.render();
     startWaveText.render();
     if (startWaveButton.isRollover() && isMousePressed) {
-      enemies = new ArrayList<Enemy>();
+      bullets = new ArrayList<Bullet>();
       roundNumber++;
       currentWave = new Wave(roundNumber);
       isWaveInProgress = true;
@@ -184,4 +184,9 @@ void drawGameOver() {
   if (backToMenuButton.isRollover() && isMousePressed) {
     isPlaying = false;
   }
+}
+
+void killEnemy(int index) {
+  enemies.remove(index);
+  playerMoney += enemyKillReward;
 }
