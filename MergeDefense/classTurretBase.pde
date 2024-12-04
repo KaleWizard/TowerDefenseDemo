@@ -20,7 +20,7 @@ class TurretBase {
     fill(red, green, blue);
     beginShape();
     for (int i = 0; i < sides; i++) {
-      float angle = TAU * i / sides;
+      float angle = PI + TAU * i / sides;
       vertex(position.x +  45 * sin(angle), position.y + 45 * cos(angle));
     }
     endShape(CLOSE);

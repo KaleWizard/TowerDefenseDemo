@@ -73,7 +73,7 @@ class TurretActive extends TurretBase {
       }
     } else {
       if (ray) {
-        fourRays(position, rayWidth, damage); // ray, ray+explosion
+        fourRays(position, rayWidth + explosionRadius, damage); // ray, ray+explosion
       } else {
         explosion(); // explosion
       }
