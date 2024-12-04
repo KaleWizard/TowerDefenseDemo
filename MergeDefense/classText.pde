@@ -459,5 +459,6 @@ class Text {
     rect(charX + pixelSize * 3, y + pixelSize * 3, pixelSize, pixelSize);
     rect(charX + pixelSize * 2, y + pixelSize * 4, pixelSize, pixelSize * 2);
     rect(charX + pixelSize * 2, y + pixelSize * 7, pixelSize, pixelSize);
+    charX += pixelSize * 6;
   }
 }

@@ -9,7 +9,7 @@ boolean isViewingTutorial = false;
 
 void setup() {
   size(1600, 900);
-  frameRate(30);
+  frameRate(60);
   initializePaths(); // See pathSelection.pde
   initializeMenu(); // See mainMenu.pde
   initializeGame(); // See gameLogic.pde
