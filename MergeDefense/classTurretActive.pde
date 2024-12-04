@@ -1,9 +1,9 @@
 
-ArrayList<TurretActive> turrets;
+// ArrayList<TurretActive> turrets;
 
-void initializeTurrets() {
-  turrets = new ArrayList<TurretActive>();
-}
+//void initializeTurrets() {
+//  turrets = new ArrayList<TurretActive>();
+//}
 
 class TurretActive extends TurretBase {
   boolean longRange;

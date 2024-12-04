@@ -24,21 +24,24 @@ void initializeGame() {
   startWaveButton = new Button(1250, 750, 300, 100, 20);
   backToMenuText = new Text("MAIN MENU", 640.625, 450, 50, color(255));
   backToMenuButton = new Button(600, 400, 400, 150, 20);
+  initializeSidebar();
 }
 
 void newGame() {
   gamePath = getPath(); // See pathSelection.pde
   enemies = new ArrayList<Enemy>();
-  roundNumber = 1;
+  roundNumber = 0;
   currentWave = new Wave(roundNumber);
   isWaveInProgress = false;
   playerMoney = 15;
   playerMoneyText.setString("$" + str(playerMoney));
   playerHealth.reset();
+  heldTurret = new TurretHeld();
   initializeExplosions(); // See classExplosion.pde
   initializeRays(); // See classRays.pde
   initializeBullets(); // See classBullets.pde
-  initializeTurrets(); // See classTurretActive.pde
+  initializeGrid(gamePath); // See gridManager.pde
+  //initializeTurrets(); // See classTurretActive.pde
 }
 
 void gameMain() {
@@ -47,6 +50,7 @@ void gameMain() {
     drawUI();
     drawGameOver();
   } else {
+    heldTurret.update();
     updateGameState();
     drawGameState();
     drawUI();
@@ -69,8 +73,12 @@ void updateGameState() {
   if (currentWave.isDone() && enemies.isEmpty()) {
     isWaveInProgress = false;
   }
-  for (TurretActive t : turrets) {
-    t.attack(enemies);
+  for (int j = 0; j < gridWidth; j++) {
+    for (int k = 0; k < gridHeight; k++) {
+      if (turretGrid[j][k] != null) {
+        turretGrid[j][k].attack(enemies);
+      }
+    }
   }
   if (!enemies.isEmpty()) {
     PVector target = enemies.get(0).position;
@@ -101,6 +109,7 @@ void drawGameState() {
   background(#3A5953);
   pushMatrix();
   translate(400, 0);
+  drawGrid();
   gamePath.render();
   int i = 0;
   while (i < explosions.size()) {
@@ -126,17 +135,31 @@ void drawGameState() {
   for (Bullet b : bullets) {
     b.render();
   }
-  for (TurretActive t : turrets) {
-    t.render();
+  for (int j = 0; j < gridWidth; j++) {
+    for (int k = 0; k < gridHeight; k++) {
+      if (turretGrid[j][k] != null) {
+        turretGrid[j][k].render();
+      }
+    }
   }
   popMatrix();
 }
 
+void drawGrid() {
+  strokeWeight(1);
+  stroke(#29ADFF);
+  for (int i = 0; i < gridWidth + 2; i++) {
+    int x = i * 100;
+    line(x, 0, x, height);
+  }
+  for (int i = 0; i < gridHeight + 2; i++) {
+    int y = i * 100;
+    line(0, y, width, y);
+  }
+}
+
 void drawUI() {
-  noStroke();
-  fill(0);
-  rect(0, 0, 400, height);
-  playerMoneyText.render();
+  drawSidebar();
   playerHealth.render();
   if (!isWaveInProgress) {
     startWaveButton.render();

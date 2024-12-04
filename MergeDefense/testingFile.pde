@@ -13,7 +13,5 @@ void initializeTesting() {
 
 void testingDraw() {
   gameMain();
-  if (isMousePressed && frameCount % 120 == 0) {
-    turrets.add(new TurretActive(counter++, 4, 4));
-  }
+  
 }
