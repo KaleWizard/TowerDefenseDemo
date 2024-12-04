@@ -33,7 +33,7 @@ class Enemy {
   
   boolean update() {
     position.add(velocity);
-    if (dist(position.x, position.y, target.x, target.y) <= 3) {
+    if (dist(position.x, position.y, target.x, target.y) <= EnemySpeed) {
       targetIndex++;
       target = gamePath.getEndpoint(targetIndex);
       if (target == null) {
@@ -46,7 +46,7 @@ class Enemy {
   }
   
   void setVelocity() {
-    velocity = target.copy().sub(position).normalize().mult(4);
+    velocity = target.copy().sub(position).normalize().mult(EnemySpeed);
   }
   
   boolean takeDamage(int damage) {

@@ -7,8 +7,8 @@ class Wave {
   
   Wave(int round) {
     framesSinceStart = 0;
-    enemyHealth = 3 + (round / 3) * 2;
-    waveLength = 180 + 30 * (round / 2);
+    enemyHealth = EnemyHealthBase + int(round * EnemyHealthMultiplier);
+    waveLength = WaveLengthBase + int(round * WaveLengthMultiplier);
     spawns = new int[waveLength];
     addDripFeed(round);
     addClusters(round);
@@ -23,7 +23,7 @@ class Wave {
   }
   
   void addDripFeed(int round) {
-    float timeBetweenSpawns = 30.0 / round;
+    float timeBetweenSpawns = BaseTimeBetweenSpawns / round;
     for (float i = 0; i < waveLength; i += timeBetweenSpawns) {
       spawns[int(i)] += enemyHealth;
     }
@@ -32,9 +32,9 @@ class Wave {
   void addClusters(int round) {
     if (round < 4) return;
     int halfHealth = enemyHealth / 2;
-    float clusterLength = 4 + round / 6;
-    float distanceBetweenClusters = clusterLength * 4;
-    float distanceBetweenEnemies = 12.0 / round;
+    float clusterLength = BaseClusterLength + round * ClusterLengthModifier;
+    float distanceBetweenClusters = clusterLength * ClusterDistanceMultiplier;
+    float distanceBetweenEnemies = BaseDistanceBetweenEnemies * pow(DistanceBetweenEnemiesMultiplier, round - 1);
     for (float i = 0; i < waveLength; i += distanceBetweenClusters) {
       for (float j = 0; j < clusterLength && i + j < waveLength; j += distanceBetweenEnemies) {
         spawns[int(i + j)] += halfHealth;

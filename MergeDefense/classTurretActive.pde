@@ -23,23 +23,23 @@ class TurretActive extends TurretBase {
     ray = type == 2;
     explosion = type == 3;
     if (longRange) {
-      damage = 2;
-      range = 550;
-      explosionRadius = 0;
-      rayWidth = 0;
-      attackDelay = 40;
+      damage = LongDamage;
+      range = LongRange;
+      explosionRadius = LongExplosionRadius;
+      rayWidth = LongRayWidth;
+      attackDelay = LongDelay;
     } else if (ray) {
-      damage = 4;
-      range = 400;
-      explosionRadius = 0;
-      rayWidth = 50;
-      attackDelay = 75;
+      damage = RayDamage;
+      range = RayRange;
+      explosionRadius = RayExplosionRadius;
+      rayWidth = RayRayWidth;
+      attackDelay = RayDelay;
     } else if (explosion) {
-      damage = 10;
-      range = 200;
-      explosionRadius = 125;
-      rayWidth = 0;
-      attackDelay = 120;
+      damage = ExplosionDamage;
+      range = ExplosionRange;
+      explosionRadius = ExplosionExplosionRadius;
+      rayWidth = ExplosionRayWidth;
+      attackDelay = ExplosionDelay;
     } else {
       noLoop();
     }

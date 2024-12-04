@@ -36,7 +36,7 @@ class Bullet {
   void render() {
     noStroke();
     fill(c);
-    ellipse(position.x, position.y, 10, 10);
+    ellipse(position.x, position.y, 25, 25);
   }
 
   boolean doCollision(ArrayList<Enemy> enemies) {

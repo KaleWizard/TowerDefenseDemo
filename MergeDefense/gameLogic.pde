@@ -19,7 +19,7 @@ Button backToMenuButton;
 TurretHeld heldTurret;
 
 void initializeGame() {
-  playerHealth = new Health(10, loadImage("Heart.png"));
+  playerHealth = new Health(BaseHealth, loadImage("Heart.png"));
   playerMoneyText = new Text("$", 50, 50, 75, color(255));
   startWaveText = new Text("START WAVE", 1282, 784, 32, color(255));
   startWaveButton = new Button(1250, 750, 300, 100, 20);
@@ -34,7 +34,7 @@ void newGame() {
   roundNumber = 0;
   currentWave = new Wave(roundNumber);
   isWaveInProgress = false;
-  playerMoney = 15;
+  playerMoney = StartingGold;
   playerHealth.reset();
   heldTurret = new TurretHeld();
   initializeExplosions(); // See classExplosion.pde
@@ -188,5 +188,7 @@ void drawGameOver() {
 
 void killEnemy(int index) {
   enemies.remove(index);
-  playerMoney += enemyKillReward;
+  if (random(1) < 5.0 / roundNumber) {
+    playerMoney += enemyKillReward;
+  }
 }
