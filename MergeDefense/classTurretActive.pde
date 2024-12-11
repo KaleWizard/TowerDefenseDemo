@@ -66,14 +66,26 @@ class TurretActive extends TurretBase {
     }
     if (target == null) return;
     if (longRange) {
-      if (ray && !explosion) {
-        targetedRay(target); // longRange+ray
+      if (ray) {
+        if (explosion) {
+          bullet(int(damage * LRngRayExpDecay)); // longRange, longRange+explosion, longRange+ray+explosion
+        } else {
+          targetedRay(target); // longRange+ray
+        }
       } else {
-        bullet(); // longRange, longRange+explosion, longRange+ray+explosion
+        if (explosion) {
+          bullet(int(damage * LRngExpDecay)); // longRange, longRange+explosion, longRange+ray+explosion
+        } else {
+          bullet(int(damage * LRngDecay)); // longRange, longRange+explosion, longRange+ray+explosion
+        }
       }
     } else {
       if (ray) {
-        fourRays(position, rayWidth + explosionRadius, damage); // ray, ray+explosion
+        if (explosion) {
+          fourRays(position, rayWidth + explosionRadius, int(damage * RayExpDecay)); // ray+explosion
+        } else {
+          fourRays(position, rayWidth, int(damage * RayDecay)); // ray
+        }
       } else {
         explosion(); // explosion
       }
@@ -91,12 +103,12 @@ class TurretActive extends TurretBase {
     rays.add(new Ray(position, direction, rayWidth, damage));
   }
   
-  void bullet() {
+  void bullet(int damage) {
     bullets.add(new Bullet(position, damage, roundNumber, explosionRadius, rayWidth));
   }
   
   void explosion() {
-    explosions.add(new Explosion(position, damage, explosionRadius));
+    explosions.add(new Explosion(position, int(damage * ExpDecay), explosionRadius));
   }
   
   void merge(TurretActive merging) {

@@ -4,12 +4,12 @@
 ////////////////////////////////////////////////////////////////////
 
 // Starting Gold
-int StartingGold = 15;
+int StartingGold = 14;
 
 // Shop Cost variables
-int typeOneCost = 5;
-int typeTwoCost = 11;
-int typeThreeCost = 17;
+int typeOneCost = 7;
+int typeTwoCost = 23;
+int typeThreeCost = 70;
 
 // Enemy Kill Bounty
 int enemyKillReward = 1;
@@ -67,3 +67,14 @@ int ExplosionRange = 125;
 int ExplosionDelay = 120;
 int ExplosionExplosionRadius = 200;
 int ExplosionRayWidth = 0;
+
+// Damage modifiers
+float LRngDecay = 1;
+float RayDecay = 1;
+float ExpDecay = 1;
+
+float LRngRayDecay = 0.7;
+float LRngExpDecay = 0.8;
+float RayExpDecay = 1.5;
+
+float LRngRayExpDecay = 0.6;
